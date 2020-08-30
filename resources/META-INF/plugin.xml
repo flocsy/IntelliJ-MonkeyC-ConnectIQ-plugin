@@ -1,0 +1,156 @@
+<idea-plugin>
+    <id>com.github.bertware.monkeyc_intellij</id>
+    <name>MonkeyC Support for Garmin IQ Developement</name>
+    <version>1.0</version>
+    <vendor email="monkeyc@bertware.net" url="https://github.com/bertware/monkeyc-intellij">Bertware</vendor>
+
+    <description>
+        <![CDATA[Basic Monkey-C language support for Garmin Smartwatch and handheld GPS development]]></description>
+
+    <change-notes><![CDATA[Initial version, based on tutorial and ported liias' work from IntelliJ 2016.]]>
+    </change-notes>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="202.0" until-build="210.0"/>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="MonkeyC file" implementationClass="com.github.bertware.monkeyc_intellij.MonkeyCFileType"
+                  fieldName="INSTANCE" language="MonkeyC" extensions="mc"/>
+        <lang.parserDefinition language="MonkeyC"
+                               implementationClass="com.github.bertware.monkeyc_intellij.language.parser.MonkeyParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="MonkeyC"
+                                       implementationClass="com.github.bertware.monkeyc_intellij.highlighting.MonkeySyntaxHighlighterFactory"/>
+
+        <completion.contributor language="MonkeyC"
+                                implementationClass="com.github.bertware.monkeyc_intellij.ide.completion.MonkeyCompletionContributor"/>
+
+        <annotator language="MonkeyC"
+                   implementationClass="com.github.bertware.monkeyc_intellij.highlighting.MonkeySyntaxAnnotator"/>
+
+        <lang.findUsagesProvider language="MonkeyC"
+                                 implementationClass="com.github.bertware.monkeyc_intellij.ide.findUsages.MonkeyFindUsagesProvider"/>
+
+        <lang.refactoringSupport language="MonkeyC"
+                                 implementationClass="com.github.bertware.monkeyc_intellij.ide.refactoring.MonkeyRefactoringSupportProvider"/>
+
+        <!-- Nice to have stuff -->
+        <gotoClassContributor
+                implementation="com.github.bertware.monkeyc_intellij.ide.navigation.MonkeyGoToClassContributor"/>
+
+        <gotoSymbolContributor
+                implementation="com.github.bertware.monkeyc_intellij.ide.navigation.MonkeyGoToSymbolContributor"/>
+
+        <codeInsight.parameterInfo language="MonkeyC"
+                                   implementationClass="com.github.bertware.monkeyc_intellij.ide.parameterInfo.MonkeyParameterInfoHandler"/>
+
+        <lang.documentationProvider language="MonkeyC"
+                                    implementationClass="com.github.bertware.monkeyc_intellij.documentation.MonkeyDocumentationProvider"/>
+
+        <lang.psiStructureViewFactory language="MonkeyC"
+                                      implementationClass="com.github.bertware.monkeyc_intellij.ide.structure.MonkeyStructureViewFactory"/>
+
+        <lang.braceMatcher language="MonkeyC"
+                           implementationClass="com.github.bertware.monkeyc_intellij.ide.MonkeyBraceMatcher"/>
+
+        <lang.commenter language="MonkeyC"
+                        implementationClass="com.github.bertware.monkeyc_intellij.ide.MonkeyCommenter"/>
+
+        <runLineMarkerContributor language="MonkeyC"
+                                  implementationClass="com.github.bertware.monkeyc_intellij.runnoevil.MonkeyTestRunLineMarkerContributor"/>
+
+        <!-- Module stuff -->
+        <sdkType implementation="com.github.bertware.monkeyc_intellij.project.sdk.MonkeySdkType"/>
+
+        <moduleType id="MONKEY_C_MODULE"
+                    implementationClass="com.github.bertware.monkeyc_intellij.project.module.MonkeyModuleType"/>
+
+        <moduleConfigurationEditorProvider
+                implementation="com.github.bertware.monkeyc_intellij.project.configuration.MonkeyModuleEditorsProvider"
+                order="first"/>
+
+        <projectTemplatesFactory
+                implementation="com.github.bertware.monkeyc_intellij.project.ui.module.newProject.MonkeyProjectTemplatesFactory"/>
+
+        <projectStructureDetector
+                implementation="com.github.bertware.monkeyc_intellij.project.MonkeyProjectStructureDetector"/>
+
+        <internalFileTemplate name="Monkey C File"/>
+
+        <!-- run application -->
+        <programRunner id="MonkeyCRunner"
+                       implementation="com.github.bertware.monkeyc_intellij.project.runconfig.MonkeyProgramRunner"/>
+        <runConfigurationProducer
+                implementation="com.github.bertware.monkeyc_intellij.project.runconfig.running.MonkeyModuleConfigurationProducer"/>
+        <runConfigurationProducer
+                implementation="com.github.bertware.monkeyc_intellij.project.runconfig.testing.MonkeyTestModuleConfigurationProducer"/>
+        <configurationType
+                implementation="com.github.bertware.monkeyc_intellij.project.runconfig.running.MonkeyConfigurationType"/>
+        <configurationType
+                implementation="com.github.bertware.monkeyc_intellij.project.runconfig.testing.MonkeyTestConfigurationType"/>
+        <moduleExtension
+                implementation="com.github.bertware.monkeyc_intellij.project.configuration.TargetDeviceModuleExtension"/>
+
+        <testFramework implementation="com.github.bertware.monkeyc_intellij.runnoevil.MonkeyTestFramework"
+                       id="RunNoEvil"/>
+
+        <!-- xml file parsers -->
+
+        <!-- App's manifest.xml -->
+        <dom.fileDescription
+                implementation="com.github.bertware.monkeyc_intellij.project.dom.manifest.ManifestDomFileDescription"/>
+
+        <standardResourceProvider
+                implementation="com.github.bertware.monkeyc_intellij.project.dom.ManifestResourceProvider"/>
+
+        <!-- SDK's projectInfo.xml -->
+        <dom.fileDescription
+                implementation="com.github.bertware.monkeyc_intellij.project.dom.sdk.projectinfo.ProjectInfoDomFileDescription"/>
+
+        <localInspection language="XML"
+                         implementationClass="com.github.bertware.monkeyc_intellij.project.dom.manifest.ManifestDomInspection"
+                         displayName="Manifest.xml" groupPath="MonkeyC" groupName="Manifest.xml" enabledByDefault="true"
+                         level="ERROR"/>
+
+    </extensions>
+    <project-components>
+        <component>
+            <implementation-class>com.github.bertware.monkeyc_intellij.project.MonkeyProjectListener
+            </implementation-class>
+        </component>
+    </project-components>
+
+    <actions>
+        <action id="Monkey.NewMonkeyFile"
+                class="com.github.bertware.monkeyc_intellij.ide.actions.CreateMonkeyFileAction"
+                text="Monkey C File" description="Create new Monkey C source file">
+            <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFromTemplate"/>
+        </action>
+
+        <group id="ConnectIqActionGroup" text="Connect I_Q" description="Garmin Connect IQ specific actions"
+               popup="true">
+            <action id="Monkey.AppSettings"
+                    class="com.github.bertware.monkeyc_intellij.ide.actions.appsettings.AppSettingsAction"
+                    description="App Settings Editor aka Object Store"/>
+
+            <action id="Monkey.ApiDoc"
+                    class="com.github.bertware.monkeyc_intellij.ide.actions.ApiDocsAction"
+                    description="Open API documentation in a browser"/>
+
+            <add-to-group group-id="MainMenu" relative-to-action="HelpMenu" anchor="before"/>
+        </group>
+
+        <group id="MonkeyGenerateGroup">
+            <action id="MonkeyGenerateTestMethod"
+                    class="com.github.bertware.monkeyc_intellij.runnoevil.MonkeyGenerateTestSupportMethodAction"
+                    text="Test Method" description="Creates Go test function"/>
+            <!--<separator/>-->
+            <add-to-group group-id="GenerateGroup" anchor="first"/>
+        </group>
+
+    </actions>
+
+</idea-plugin>

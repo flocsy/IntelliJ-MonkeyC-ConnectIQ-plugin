@@ -1,8 +1,9 @@
 # Monkey C language and Garmin Connect IQ plugin
 
-[![Build Status](https://travis-ci.org/liias/monkey.svg?branch=master)](https://travis-ci.org/liias/monkey)
+An updated version of [Liias' Monkey C plugin for Jetbrains IDEs](https://github.com/liias/monkey).
+This plugin adds support for [Monkey C language](https://developer.garmin.com/connect-iq/programmers-guide/monkey-c/) and [Garmin Connect IQ SDK](https://developer.garmin.com/connect-iq/overview/) in IntelliJ IDEA.
 
-This unofficial [Monkey C plugin](https://plugins.jetbrains.com/plugin/8253) adds support for [Monkey C language](https://developer.garmin.com/connect-iq/programmers-guide/monkey-c/) and [Garmin Connect IQ SDK](https://developer.garmin.com/connect-iq/overview/) for IntelliJ IDEA.
+Note that it isn't under super-active development, I'm only trying to get the most essential features working again with the latest IntelliJ version.
 
 ### Features:
 
@@ -39,7 +40,10 @@ bugs or is incomplete
 
 ## How to use the plugin
 
-1. Download latest IDEA Community Edition. In Settings>Plugins search for this one and install.
+1. Download latest IDEA Community Edition (2020.2 or later). In Settings>Plugins search for this one and install.
 2. Create new project or open existing one
 3. Setup SDK and apply it to project
 4. Set target device etc
+
+## Credits
+Most of the code was written by Liias, this fork restructured the code and makes it compatible with IntelliJ 2020.2. 
