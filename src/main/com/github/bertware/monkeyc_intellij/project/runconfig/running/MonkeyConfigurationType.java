@@ -1,41 +1,53 @@
 package com.github.bertware.monkeyc_intellij.project.runconfig.running;
 
 import com.github.bertware.monkeyc_intellij.MonkeyCIcons;
-import com.intellij.execution.configuration.ConfigurationFactoryEx;
-import com.intellij.execution.configurations.*;
-import com.intellij.openapi.project.Project;
-
+import com.intellij.execution.configurations.ConfigurationFactory;
+import com.intellij.execution.configurations.ConfigurationType;
+import com.intellij.execution.configurations.ConfigurationTypeUtil;
 import org.jetbrains.annotations.NotNull;
 
-public class MonkeyConfigurationType extends ConfigurationTypeBase {
+import javax.swing.*;
 
-  private final ConfigurationFactoryEx factory;
+public class MonkeyConfigurationType implements ConfigurationType {
 
-  protected MonkeyConfigurationType() {
-    // icon is 16 (default for java is AllIcons.RunConfigurations.Application)
-    super("MonkeyCApplication", "Monkey C Application", "Configuration to run a Connect IQ app with the simulator", MonkeyCIcons.MODULE16);
+    private final ConfigurationFactory factory;
 
-    factory = new ConfigurationFactoryEx(this) {
-      @Override
-      public void onNewConfigurationCreated(@NotNull RunConfiguration configuration) {
-        final ModuleBasedConfiguration moduleBasedConfiguration = (ModuleBasedConfiguration) configuration;
-        moduleBasedConfiguration.onNewConfigurationCreated();
-      }
+    public MonkeyConfigurationType() {
+        factory = new MonkeyConfigurationFactory(this);
+    }
 
-      @NotNull
-      public RunConfiguration createTemplateConfiguration(@NotNull Project project) {
-        return new MonkeyModuleBasedConfiguration("", new MonkeyRunConfigurationModule(project), this);
-      }
-    };
-    addFactory(factory);
-  }
+    @Override
+    public String getDisplayName() {
+        return "Monkey C Application";
+    }
 
-  public ConfigurationFactory getFactory() {
-    return factory;
-  }
+    @Override
+    public String getConfigurationTypeDescription() {
+        return "Configuration to run a Connect IQ app with the simulator";
+    }
 
-  @NotNull
-  public static MonkeyConfigurationType getInstance() {
-    return ConfigurationTypeUtil.findConfigurationType(MonkeyConfigurationType.class);
-  }
+    @Override
+    public Icon getIcon() {
+        return MonkeyCIcons.MODULE16;
+    }
+
+    @NotNull
+    @Override
+    public String getId() {
+        return "MONKEY_C_APPLICATION";
+    }
+
+    @Override
+    public ConfigurationFactory[] getConfigurationFactories() {
+        return new ConfigurationFactory[]{factory};
+    }
+
+    public ConfigurationFactory getFactory() {
+        return factory;
+    }
+
+    @NotNull
+    public static MonkeyConfigurationType getInstance() {
+        return ConfigurationTypeUtil.findConfigurationType(MonkeyConfigurationType.class);
+    }
 }

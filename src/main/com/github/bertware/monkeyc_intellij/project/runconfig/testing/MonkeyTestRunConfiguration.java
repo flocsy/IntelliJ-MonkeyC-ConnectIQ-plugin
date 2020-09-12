@@ -1,6 +1,6 @@
 package com.github.bertware.monkeyc_intellij.project.runconfig.testing;
 
-import com.github.bertware.monkeyc_intellij.project.runconfig.AbstractMonkeyModuleBasedConfiguration;
+import com.github.bertware.monkeyc_intellij.project.runconfig.AbstractMonkeyRunConfiguration;
 import com.github.bertware.monkeyc_intellij.project.runconfig.AbstractMonkeyRunConfigurationModule;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
@@ -9,15 +9,13 @@ import com.intellij.execution.configurations.RunProfileState;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.execution.testframework.sm.runner.SMRunnerConsolePropertiesProvider;
 import com.intellij.execution.testframework.sm.runner.SMTRunnerConsoleProperties;
-
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class MonkeyTestModuleBasedConfiguration extends AbstractMonkeyModuleBasedConfiguration implements SMRunnerConsolePropertiesProvider {
+public class MonkeyTestRunConfiguration extends AbstractMonkeyRunConfiguration implements SMRunnerConsolePropertiesProvider {
   public static final String TEST_FRAMEWORK_NAME = "RunNoEvil";
 
-  public MonkeyTestModuleBasedConfiguration(String name, @NotNull MonkeyTestRunConfigurationModule configurationModule, @NotNull ConfigurationFactory factory) {
+  public MonkeyTestRunConfiguration(String name, @NotNull MonkeyTestRunConfigurationModule configurationModule, @NotNull ConfigurationFactory factory) {
     super(name, configurationModule, factory);
   }
 

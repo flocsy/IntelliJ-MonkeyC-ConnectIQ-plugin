@@ -11,23 +11,23 @@ import com.intellij.openapi.util.Ref;
 import com.intellij.psi.PsiElement;
 
 
-public abstract class AbstractMonkeyModuleConfigurationProducer extends RunConfigurationProducer<AbstractMonkeyModuleBasedConfiguration> {
-  protected AbstractMonkeyModuleConfigurationProducer(ConfigurationType configurationType) {
-    super(configurationType);
-  }
-
-  @Override
-  protected boolean setupConfigurationFromContext(AbstractMonkeyModuleBasedConfiguration configuration, ConfigurationContext context, Ref<PsiElement> sourceElement) {
-    final Location location = context.getLocation();
-
-    if (location == null) {
-      return false;
+public abstract class AbstractMonkeyModuleConfigurationProducer extends RunConfigurationProducer<AbstractMonkeyRunConfiguration> {
+    protected AbstractMonkeyModuleConfigurationProducer(ConfigurationType configurationType) {
+        super(configurationType);
     }
-    if (!(location.getPsiElement().getLanguage() instanceof MonkeyCLanguage)) {
-      return false;
-    }
-    final Module contextModule = context.getModule();
-    if (contextModule != null) {
+
+    @Override
+    protected boolean setupConfigurationFromContext(AbstractMonkeyRunConfiguration configuration, ConfigurationContext context, Ref<PsiElement> sourceElement) {
+        final Location location = context.getLocation();
+
+        if (location == null) {
+            return false;
+        }
+        if (!(location.getPsiElement().getLanguage() instanceof MonkeyCLanguage)) {
+            return false;
+        }
+        final Module contextModule = context.getModule();
+        if (contextModule != null) {
       configuration.setModule(contextModule);
       configuration.setName(contextModule.getName());
     }
@@ -37,16 +37,16 @@ public abstract class AbstractMonkeyModuleConfigurationProducer extends RunConfi
     return true;
   }
 
-  @Override
-  public boolean isConfigurationFromContext(AbstractMonkeyModuleBasedConfiguration configuration, ConfigurationContext context) {
-    final Module contextModule = context.getModule();
-    if (contextModule == null) {
-      return false;
-    }
-    final Module confModule = configuration.getConfigurationModule().getModule();
+    @Override
+    public boolean isConfigurationFromContext(AbstractMonkeyRunConfiguration configuration, ConfigurationContext context) {
+        final Module contextModule = context.getModule();
+        if (contextModule == null) {
+            return false;
+        }
+        final Module confModule = configuration.getConfigurationModule().getModule();
 
-    return Comparing.equal(contextModule, confModule);
-  }
+        return Comparing.equal(contextModule, confModule);
+    }
 
 
 }

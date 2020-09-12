@@ -8,7 +8,6 @@ import com.intellij.execution.ui.CommonProgramParametersPanel;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.projectRoots.Sdk;
@@ -19,9 +18,6 @@ import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.ui.ListCellRendererWrapper;
 import com.intellij.ui.PanelWithAnchor;
 import com.intellij.util.ui.UIUtil;
-
-
-
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -31,8 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class MonkeySettingsEditor extends SettingsEditor<AbstractMonkeyModuleBasedConfiguration> implements PanelWithAnchor {
+public class MonkeySettingsEditor extends SettingsEditor<AbstractMonkeyRunConfiguration> implements PanelWithAnchor {
   private final Project project;
+  private final Module module;
   private LabeledComponent<JComboBox<TargetDevice>> targetDevice;
   private LabeledComponent<JComboBox<DeploymentTarget>> deploymentTarget;
 
@@ -46,7 +43,7 @@ public class MonkeySettingsEditor extends SettingsEditor<AbstractMonkeyModuleBas
   public MonkeySettingsEditor(final Project project, Module module) {
     this.project = project;
     this.anchor = UIUtil.mergeComponentsWithAnchor(commonProgramParameters);
-    initComponents(module);
+    this.module = module;
   }
 
   public TextFieldWithBrowseButton getDeviceDirectoryField() {
@@ -54,8 +51,11 @@ public class MonkeySettingsEditor extends SettingsEditor<AbstractMonkeyModuleBas
   }
 
   public void initComponents(Module module) {
+    moduleComponent = new LabeledComponent<>();
+    moduleComponent.setComponent(new ModulesComboBox());
     ModulesComboBox modulesComboBox = moduleComponent.getComponent();
     modulesComboBox.fillModules(project, MonkeyModuleType.getInstance());
+
     fillTargetDevices(module);
     fillDeploymentTargets();
 
@@ -145,7 +145,9 @@ public class MonkeySettingsEditor extends SettingsEditor<AbstractMonkeyModuleBas
   }
 
   @Override
-  protected void resetEditorFrom(AbstractMonkeyModuleBasedConfiguration configuration) {
+  protected void resetEditorFrom(AbstractMonkeyRunConfiguration configuration) {
+    initComponents(module);
+
     commonProgramParameters.reset(configuration);
     moduleComponent.getComponent().setSelectedModule(configuration.getConfigurationModule().getModule());
 
@@ -173,7 +175,9 @@ public class MonkeySettingsEditor extends SettingsEditor<AbstractMonkeyModuleBas
   }
 
   @Override
-  protected void applyEditorTo(AbstractMonkeyModuleBasedConfiguration configuration) throws ConfigurationException {
+  protected void applyEditorTo(AbstractMonkeyRunConfiguration configuration) {
+    initComponents(module);
+
     commonProgramParameters.applyTo(configuration);
     configuration.setModule(moduleComponent.getComponent().getSelectedModule());
 

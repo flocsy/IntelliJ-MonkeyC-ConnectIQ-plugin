@@ -36,7 +36,7 @@ public class YardDecompiler {
 
   public String parse() {
     try {
-      SdkModuleOrClass topLevelModule = parseModule("top-level-namespace.html", "top-level-namespace");
+      SdkModuleOrClass topLevelModule = parseModule("index.html", "top-level-namespace");
       return generateSkeletons(topLevelModule);
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -529,14 +529,14 @@ public class YardDecompiler {
     private String documentation;
     private String since;
 
-    private List<String> supportedDevices = new ArrayList<>();
-    private List<String> see = new ArrayList<>();
+    private final List<String> supportedDevices = new ArrayList<>();
+    private final List<String> see = new ArrayList<>();
 
     // If empty, then all app types are supported
     // from: "Watch Face", "Data Field", "Widget", "App"
-    private List<String> appTypes = new ArrayList<>();
+    private final List<String> appTypes = new ArrayList<>();
 
-    private List<String> permissions = new ArrayList<>();
+    private final List<String> permissions = new ArrayList<>();
 
     private boolean deprecated;
     // deprecatedText can be null even if deprecated is true
@@ -790,7 +790,7 @@ public class YardDecompiler {
     }
 
     private static class SdkMethodParameterOption extends SdkMethodParameter {
-      private String parameterName;
+      private final String parameterName;
 
       public SdkMethodParameterOption(String name, String type, String parameterName) {
         super(name, type);
@@ -803,7 +803,7 @@ public class YardDecompiler {
     }
 
     private static class SdkMethodParameter extends SdkEntity {
-      private String type;
+      private final String type;
 
       public SdkMethodParameter(String name, String type) {
         super(name);

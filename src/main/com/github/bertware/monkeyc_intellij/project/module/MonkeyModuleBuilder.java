@@ -11,7 +11,7 @@ import com.github.bertware.monkeyc_intellij.project.module.util.MonkeyModuleUtil
 import com.github.bertware.monkeyc_intellij.project.runconfig.TargetDevice;
 import com.github.bertware.monkeyc_intellij.project.runconfig.TargetSdkVersion;
 import com.github.bertware.monkeyc_intellij.project.runconfig.running.MonkeyConfigurationType;
-import com.github.bertware.monkeyc_intellij.project.runconfig.running.MonkeyModuleBasedConfiguration;
+import com.github.bertware.monkeyc_intellij.project.runconfig.running.MonkeyRunConfiguration;
 import com.github.bertware.monkeyc_intellij.project.sdk.MonkeySdkType;
 import com.github.bertware.monkeyc_intellij.project.ui.module.MonkeyModuleWizardStep;
 import com.github.bertware.monkeyc_intellij.project.ui.module.newProject.MonkeyApplicationModifiedSettingsStep;
@@ -45,21 +45,6 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.DocumentUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import org.apache.commons.lang.WordUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -73,7 +58,8 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.github.bertware.monkeyc_intellij.jps.model.JpsMonkeyModuleType.*;
+import static com.github.bertware.monkeyc_intellij.jps.model.JpsMonkeyModuleType.MONKEY_RESOURCE_ROOT_TYPE;
+import static com.github.bertware.monkeyc_intellij.jps.model.JpsMonkeyModuleType.MONKEY_SOURCE_ROOT_TYPE;
 import static com.github.bertware.monkeyc_intellij.jps.model.JpsMonkeySdkType.hasMinSdkVersionSupport;
 import static com.github.bertware.monkeyc_intellij.project.module.util.MonkeyModuleUtil.MANIFEST_XML;
 import static java.util.Objects.requireNonNull;
@@ -277,7 +263,8 @@ public class MonkeyModuleBuilder extends ModuleBuilder implements ModuleBuilderL
                 }
                 final VirtualFile templateFile = sdkBinDir.findFileByRelativePath(baseDir + "/" + relativeFilePath);
                 // this handles creating child directories as well
-                VirtualFile newFile = VfsUtil.copyFileRelative(project, templateFile, rootDir, toRelativeFilePath);
+                // TODO verify correct working, used to be copyFileRelative
+                VirtualFile newFile = VfsUtil.copyFile(project, templateFile, rootDir, toRelativeFilePath);
 
                 if (!newFile.getFileType().isBinary()) {
                     String content = getParsedFileContent(templateSubstitutionContext, newFile);
@@ -416,7 +403,7 @@ public class MonkeyModuleBuilder extends ModuleBuilder implements ModuleBuilderL
         final RunManager runManager = RunManager.getInstance(project);
         final ConfigurationFactory configurationFactory = MonkeyConfigurationType.getInstance().getFactory();
         final RunnerAndConfigurationSettings settings = runManager.createRunConfiguration(module.getName(), configurationFactory);
-        final MonkeyModuleBasedConfiguration configuration = (MonkeyModuleBasedConfiguration) settings.getConfiguration();
+        final MonkeyRunConfiguration configuration = (MonkeyRunConfiguration) settings.getConfiguration();
         configuration.setModule(module);
         configuration.setTargetDeviceId(DEFAULT_TARGET_DEVICE.getId());
         runManager.addConfiguration(settings, false);

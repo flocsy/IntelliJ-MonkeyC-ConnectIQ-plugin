@@ -25,9 +25,6 @@ import com.intellij.openapi.util.ThrowableComputable;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.newvfs.impl.VirtualDirectoryImpl;
-
-
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,13 +32,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
-
 import static com.github.bertware.monkeyc_intellij.Utils.createGeneralCommandLine;
 import static java.util.Objects.requireNonNull;
 
 public abstract class AbstractMonkeyRunningState extends CommandLineState {
   private MonkeyParameters monkeyParameters;
-  private boolean forTests;
+  private final boolean forTests;
 
   protected AbstractMonkeyRunningState(ExecutionEnvironment environment, boolean forTests) {
     super(environment);
@@ -73,7 +69,7 @@ public abstract class AbstractMonkeyRunningState extends CommandLineState {
   //TODO: tests only
   protected MonkeyParameters createMonkeyParameters() throws ExecutionException {
     final MonkeyParameters params = new MonkeyParameters();
-    final AbstractMonkeyModuleBasedConfiguration runConfig = getConfiguration();
+    final AbstractMonkeyRunConfiguration runConfig = getConfiguration();
     final AbstractMonkeyRunConfigurationModule configurationModule = runConfig.getConfigurationModule();
     final int classPathType = MonkeyParameters.SDK_AND_CLASSES;
     params.configureByModule(configurationModule.getModule(), classPathType, isForTests());
@@ -81,15 +77,15 @@ public abstract class AbstractMonkeyRunningState extends CommandLineState {
     return params;
   }
 
-  protected AbstractMonkeyModuleBasedConfiguration getConfiguration() {
+  protected AbstractMonkeyRunConfiguration getConfiguration() {
     if (getEnvironment().getRunnerAndConfigurationSettings() == null) {
       throw new RuntimeException("runnerAndConfigurationSettings is null");
     }
     final RunConfiguration configuration = getEnvironment().getRunnerAndConfigurationSettings().getConfiguration();
-    if (configuration == null || !(configuration instanceof AbstractMonkeyModuleBasedConfiguration)) {
+    if (configuration == null || !(configuration instanceof AbstractMonkeyRunConfiguration)) {
       throw new RuntimeException("runnerAndConfigurationSettings.getConfiguration() is null or wrong type");
     }
-    return (AbstractMonkeyModuleBasedConfiguration) configuration;
+    return (AbstractMonkeyRunConfiguration) configuration;
   }
 
   protected ExecutionResult runOnSimulator(ConsoleView console, Executor executor) throws ExecutionException {

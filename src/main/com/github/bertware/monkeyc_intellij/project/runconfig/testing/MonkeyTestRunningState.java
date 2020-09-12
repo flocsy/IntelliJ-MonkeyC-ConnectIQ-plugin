@@ -18,7 +18,6 @@ import com.intellij.execution.testframework.sm.ServiceMessageBuilder;
 import com.intellij.execution.testframework.sm.runner.SMTRunnerConsoleProperties;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.openapi.util.Key;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -43,10 +42,10 @@ public class MonkeyTestRunningState extends AbstractMonkeyRunningState {
 
     ProcessHandler processHandler = startInSimulator();
     RunConfiguration runConfiguration = getConfiguration();
-    TestConsoleProperties properties = new SMTRunnerConsoleProperties(runConfiguration, MonkeyTestModuleBasedConfiguration.TEST_FRAMEWORK_NAME, executor);
+    TestConsoleProperties properties = new SMTRunnerConsoleProperties(runConfiguration, MonkeyTestRunConfiguration.TEST_FRAMEWORK_NAME, executor);
 
     ConsoleView console = SMTestRunnerConnectionUtil.
-      createAndAttachConsole(MonkeyTestModuleBasedConfiguration.TEST_FRAMEWORK_NAME, processHandler, properties);
+            createAndAttachConsole(MonkeyTestRunConfiguration.TEST_FRAMEWORK_NAME, processHandler, properties);
     //new MonkeySearchForTestsTask(null, null).attachTaskToProcess(processHandler);
 
     AtomicReference<String> lastTestName = new AtomicReference<>(null);

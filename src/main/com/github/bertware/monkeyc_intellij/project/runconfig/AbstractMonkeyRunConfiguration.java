@@ -29,12 +29,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public abstract class AbstractMonkeyModuleBasedConfiguration extends ModuleBasedConfiguration<AbstractMonkeyRunConfigurationModule, Integer> implements CommonProgramRunConfigurationParameters {
+public abstract class AbstractMonkeyRunConfiguration extends ModuleBasedConfiguration<AbstractMonkeyRunConfigurationModule, Integer> implements CommonProgramRunConfigurationParameters {
   private static final SkipDefaultValuesSerializationFilters SERIALIZATION_FILTERS = new SkipDefaultValuesSerializationFilters();
-  private MonkeyModuleBasedConfigurationBean bean = new MonkeyModuleBasedConfigurationBean();
+  private final MonkeyModuleBasedConfigurationBean bean = new MonkeyModuleBasedConfigurationBean();
   private final Map<String, String> envs = new LinkedHashMap<>();
 
-  public AbstractMonkeyModuleBasedConfiguration(String name, @NotNull AbstractMonkeyRunConfigurationModule configurationModule, @NotNull ConfigurationFactory factory) {
+  public AbstractMonkeyRunConfiguration(String name, @NotNull AbstractMonkeyRunConfigurationModule configurationModule, @NotNull ConfigurationFactory factory) {
     super(name, configurationModule, factory);
   }
 
@@ -48,7 +48,7 @@ public abstract class AbstractMonkeyModuleBasedConfiguration extends ModuleBased
   @NotNull
   @Override
   public SettingsEditor<? extends RunConfiguration> getConfigurationEditor() {
-    SettingsEditorGroup<AbstractMonkeyModuleBasedConfiguration> group = new SettingsEditorGroup<>();
+    SettingsEditorGroup<AbstractMonkeyRunConfiguration> group = new SettingsEditorGroup<>();
     Module module = getConfigurationModule().getModule();
     group.addEditor(ExecutionBundle.message("run.configuration.configuration.tab.title"), new MonkeySettingsEditor(getProject(), module));
     group.addEditor(ExecutionBundle.message("logs.tab.title"), new LogConfigurationPanel<>());

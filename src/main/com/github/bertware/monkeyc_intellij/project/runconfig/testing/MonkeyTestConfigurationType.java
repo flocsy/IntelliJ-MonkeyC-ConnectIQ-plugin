@@ -4,7 +4,6 @@ import com.github.bertware.monkeyc_intellij.MonkeyCIcons;
 import com.intellij.execution.configuration.ConfigurationFactoryEx;
 import com.intellij.execution.configurations.*;
 import com.intellij.openapi.project.Project;
-
 import org.jetbrains.annotations.NotNull;
 
 public class MonkeyTestConfigurationType extends ConfigurationTypeBase {
@@ -22,7 +21,7 @@ public class MonkeyTestConfigurationType extends ConfigurationTypeBase {
 
       @NotNull
       public RunConfiguration createTemplateConfiguration(@NotNull Project project) {
-        return new MonkeyTestModuleBasedConfiguration("", new MonkeyTestRunConfigurationModule(project), this);
+        return new MonkeyTestRunConfiguration("", new MonkeyTestRunConfigurationModule(project), this);
       }
     };
     addFactory(factory);

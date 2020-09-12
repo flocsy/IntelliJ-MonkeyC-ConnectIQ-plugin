@@ -1,7 +1,6 @@
 package com.github.bertware.monkeyc_intellij.project.sdk.skeleton;
 
 import com.github.bertware.monkeyc_intellij.project.sdk.MonkeySdkType;
-import com.github.bertware.monkeyc_intellij.yard.YardDecompiler;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.PathManager;
 import com.intellij.openapi.projectRoots.Sdk;
@@ -9,14 +8,9 @@ import com.intellij.openapi.projectRoots.SdkModificator;
 import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.LocalFileSystem;
-import com.intellij.openapi.vfs.VirtualFile;
 
-
-
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -47,10 +41,13 @@ public class SdkSkeleton {
 
     String skeletonFilePath = skeletonsPath + File.separator + "connectiq.mc";
     Path path = Paths.get(skeletonFilePath);
-
     String apiDocPath = MonkeySdkType.getApiDocPath(sdk);
+
+    /*
+    // TODO: Fix for SDK 3.2
     YardDecompiler yardDecompiler = new YardDecompiler(apiDocPath);
     String skeletonsAsOneFile = yardDecompiler.parse();
+    */
 
     /*
     String sdkBinPath = MonkeySdkType.getBinPath(sdk);
@@ -58,6 +55,8 @@ public class SdkSkeleton {
     String skeletonsAsOneFile = apiReader.parseApiDebugXml();
     */
 
+    /*
+    // TODO: Fix for SDK 3.2
     try (BufferedWriter writer = Files.newBufferedWriter(path)) {
       writer.write(skeletonsAsOneFile);
     } catch (IOException e) {
@@ -68,6 +67,7 @@ public class SdkSkeleton {
     sdkModificator = sdk.getSdkModificator();
     sdkModificator.addRoot(root, OrderRootType.CLASSES);
     sdkModificator.commitChanges();
+    */
   }
 
   public static String getSkeletonsPath(String basePath, String sdkHome) {

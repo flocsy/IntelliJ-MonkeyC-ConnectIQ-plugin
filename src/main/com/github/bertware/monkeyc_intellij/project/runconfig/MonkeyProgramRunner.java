@@ -14,6 +14,6 @@ public class MonkeyProgramRunner extends DefaultProgramRunner {
 
   @Override
   public boolean canRun(@NotNull String executorId, @NotNull RunProfile profile) {
-    return profile instanceof AbstractMonkeyModuleBasedConfiguration && DefaultRunExecutor.EXECUTOR_ID.equals(executorId);
+    return profile instanceof AbstractMonkeyRunConfiguration && DefaultRunExecutor.EXECUTOR_ID.equals(executorId);
   }
 }
