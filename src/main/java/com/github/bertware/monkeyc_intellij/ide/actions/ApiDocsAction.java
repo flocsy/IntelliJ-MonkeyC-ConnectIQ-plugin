@@ -9,6 +9,9 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.roots.ProjectRootManager;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 
 public class ApiDocsAction extends AnAction implements DumbAware {
   public ApiDocsAction() {
@@ -19,11 +22,13 @@ public class ApiDocsAction extends AnAction implements DumbAware {
   public void actionPerformed(AnActionEvent e) {
     Project project = e.getProject();
     Sdk projectSdk = ProjectRootManager.getInstance(project).getProjectSdk();
-    if (!(projectSdk.getSdkType() instanceof MonkeySdkType)) {
+    // TODO: proper warning to user in IDE that the project SDK is not set
+    if (projectSdk == null || !(projectSdk.getSdkType() instanceof MonkeySdkType)) {
       return;
     }
     String apiDocPath = MonkeySdkType.getApiDocPath(projectSdk);
-    String framesHtmlPath = apiDocPath + "frames.html";
-    BrowserUtil.browse(framesHtmlPath);
+    String framesHtmlPath = apiDocPath + "index.html";
+    Path path = Paths.get(framesHtmlPath);
+    BrowserUtil.browse(path);
   }
 }
