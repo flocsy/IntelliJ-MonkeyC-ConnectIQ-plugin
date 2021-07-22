@@ -44,7 +44,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 
 public class SimulatorCommunication {
-  private static final Logger LOG = Logger.getInstance("#io.github.liias.monkey.ide.actions.appsettings.SimulatorCommunication");
+  private static final Logger LOG = Logger.getInstance(SimulatorCommunication.class.getCanonicalName());
 
   public static final int SIMULATOR_PORT_MIN = 42877;
   public static final int SIMULATOR_PORT_MAX = 42882;

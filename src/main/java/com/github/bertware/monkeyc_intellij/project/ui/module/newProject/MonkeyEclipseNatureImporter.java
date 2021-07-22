@@ -28,7 +28,7 @@ import static com.github.bertware.monkeyc_intellij.jps.model.JpsMonkeyModuleType
 
 
 public class MonkeyEclipseNatureImporter extends EclipseNatureImporter {
-  private static final Logger LOG = Logger.getInstance("#io.github.liias.monkey.project.ui.module.newProject.MonkeyEclipseNatureImporter");
+  private static final Logger LOG = Logger.getInstance(MonkeyEclipseNatureImporter.class.getCanonicalName());
 
   public static final String NATURE_NAME = "connectiq.projectNature";
 

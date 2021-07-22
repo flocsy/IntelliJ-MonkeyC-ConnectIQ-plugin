@@ -65,7 +65,7 @@ import static com.github.bertware.monkeyc_intellij.project.module.util.MonkeyMod
 import static java.util.Objects.requireNonNull;
 
 public class MonkeyModuleBuilder extends ModuleBuilder implements ModuleBuilderListener {
-    private static final Logger LOG = Logger.getInstance("#io.github.liias.monkey.project.module.MonkeyModuleBuilder");
+    private static final Logger LOG = Logger.getInstance(MonkeyModuleBuilder.class.getCanonicalName());
     public static final String PROJECT_INFO_XML = "projectInfo.xml";
     public static final String FILE_TYPE_SOURCE = "source";
     public static final TargetDevice DEFAULT_TARGET_DEVICE = TargetDevice.DEFAULT_DEVICE;
