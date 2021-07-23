@@ -20,6 +20,7 @@ public class MonkeyCreatorImpl extends MonkeyPsiCompositeElementImpl implements 
     visitor.visitCreator(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MonkeyVisitor) accept((MonkeyVisitor)visitor);
     else super.accept(visitor);

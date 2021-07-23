@@ -16,10 +16,12 @@ public class MonkeyExclusiveOrExpressionImpl extends MonkeyExpressionImpl implem
     super(node);
   }
 
+  @Override
   public void accept(@NotNull MonkeyVisitor visitor) {
     visitor.visitExclusiveOrExpression(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MonkeyVisitor) accept((MonkeyVisitor)visitor);
     else super.accept(visitor);

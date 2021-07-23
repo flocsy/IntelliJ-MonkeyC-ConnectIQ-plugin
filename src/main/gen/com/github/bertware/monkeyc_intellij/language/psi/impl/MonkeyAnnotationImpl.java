@@ -20,6 +20,7 @@ public class MonkeyAnnotationImpl extends MonkeyPsiCompositeElementImpl implemen
     visitor.visitAnnotation(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MonkeyVisitor) accept((MonkeyVisitor)visitor);
     else super.accept(visitor);

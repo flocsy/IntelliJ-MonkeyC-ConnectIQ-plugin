@@ -16,10 +16,12 @@ public class MonkeyShiftExpressionImpl extends MonkeyExpressionImpl implements M
     super(node);
   }
 
+  @Override
   public void accept(@NotNull MonkeyVisitor visitor) {
     visitor.visitShiftExpression(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MonkeyVisitor) accept((MonkeyVisitor)visitor);
     else super.accept(visitor);

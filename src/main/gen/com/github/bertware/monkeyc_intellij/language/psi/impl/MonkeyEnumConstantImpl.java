@@ -20,6 +20,7 @@ public class MonkeyEnumConstantImpl extends AbstractMonkeyComponentImpl implemen
     visitor.visitEnumConstant(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MonkeyVisitor) accept((MonkeyVisitor)visitor);
     else super.accept(visitor);

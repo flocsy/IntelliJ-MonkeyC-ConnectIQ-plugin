@@ -1,5 +1,6 @@
 package com.github.bertware.monkeyc_intellij.language.lexer;
 
+import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 
 import static com.intellij.psi.TokenType.BAD_CHARACTER;

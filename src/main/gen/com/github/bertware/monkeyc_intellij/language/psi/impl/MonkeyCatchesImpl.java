@@ -20,6 +20,7 @@ public class MonkeyCatchesImpl extends MonkeyPsiCompositeElementImpl implements 
     visitor.visitCatches(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MonkeyVisitor) accept((MonkeyVisitor)visitor);
     else super.accept(visitor);

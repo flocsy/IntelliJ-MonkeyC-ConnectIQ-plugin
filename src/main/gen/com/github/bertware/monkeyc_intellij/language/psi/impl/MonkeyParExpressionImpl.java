@@ -16,10 +16,12 @@ public class MonkeyParExpressionImpl extends MonkeyExpressionImpl implements Mon
     super(node);
   }
 
+  @Override
   public void accept(@NotNull MonkeyVisitor visitor) {
     visitor.visitParExpression(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MonkeyVisitor) accept((MonkeyVisitor)visitor);
     else super.accept(visitor);

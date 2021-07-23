@@ -20,6 +20,7 @@ public class MonkeyBitwiseOperatorImpl extends MonkeyPsiCompositeElementImpl imp
     visitor.visitBitwiseOperator(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MonkeyVisitor) accept((MonkeyVisitor)visitor);
     else super.accept(visitor);

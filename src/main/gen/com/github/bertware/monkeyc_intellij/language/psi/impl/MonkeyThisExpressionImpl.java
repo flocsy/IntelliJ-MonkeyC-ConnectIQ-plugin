@@ -20,6 +20,7 @@ public class MonkeyThisExpressionImpl extends MonkeyReferenceImpl implements Mon
     visitor.visitThisExpression(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MonkeyVisitor) accept((MonkeyVisitor)visitor);
     else super.accept(visitor);

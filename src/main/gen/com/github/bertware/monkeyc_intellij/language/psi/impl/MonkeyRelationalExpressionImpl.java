@@ -16,10 +16,12 @@ public class MonkeyRelationalExpressionImpl extends MonkeyExpressionImpl impleme
     super(node);
   }
 
+  @Override
   public void accept(@NotNull MonkeyVisitor visitor) {
     visitor.visitRelationalExpression(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MonkeyVisitor) accept((MonkeyVisitor)visitor);
     else super.accept(visitor);

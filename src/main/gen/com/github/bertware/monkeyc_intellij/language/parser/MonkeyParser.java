@@ -165,7 +165,7 @@ public class MonkeyParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_);
     r = expression(b, l + 1);
     r = r && argumentsList_1(b, l + 1);
-    exit_section_(b, l, m, r, false, argumentsList_recover_parser_);
+    exit_section_(b, l, m, r, false, MonkeyParser::argumentsList_recover);
     return r;
   }
 
@@ -2630,21 +2630,12 @@ public class MonkeyParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  static final Parser argumentsList_recover_parser_ = new Parser() {
-    public boolean parse(PsiBuilder b, int l) {
-      return argumentsList_recover(b, l + 1);
-    }
-  };
-  static final Parser compilationUnit_auto_recover_ = new Parser() {
-    public boolean parse(PsiBuilder b, int l) {
-      return !nextTokenIsFast(b, BANG, BLING,
-        BREAK, CHARLITERAL, CLASS, COLON, CONST, CONTINUE,
-        DO, DOUBLELITERAL, ENUM, FALSE, FLOATLITERAL, FOR,
-        FUNCTION, HEX_LITERAL, HIDDEN, IDENTIFIER, IF, INTLITERAL,
-        LBRACE, LBRACKET, LONGLITERAL, LPAREN, MODULE, NEW,
-        NULL, PLUS, PLUSPLUS, RETURN, SELF, SEMI,
-        STATIC, SUB, SUBSUB, SWITCH, THIS, THROW,
-        TILDE, TRUE, TRY, USING, VAR, VOID, WHILE, STRING);
-    }
-  };
+  static final Parser compilationUnit_auto_recover_ = (b, l) -> !nextTokenIsFast(b, BANG, BLING,
+    BREAK, CHARLITERAL, CLASS, COLON, CONST, CONTINUE,
+    DO, DOUBLELITERAL, ENUM, FALSE, FLOATLITERAL, FOR,
+    FUNCTION, HEX_LITERAL, HIDDEN, IDENTIFIER, IF, INTLITERAL,
+    LBRACE, LBRACKET, LONGLITERAL, LPAREN, MODULE, NEW,
+    NULL, PLUS, PLUSPLUS, RETURN, SELF, SEMI,
+    STATIC, SUB, SUBSUB, SWITCH, THIS, THROW,
+    TILDE, TRUE, TRY, USING, VAR, VOID, WHILE, STRING);
 }

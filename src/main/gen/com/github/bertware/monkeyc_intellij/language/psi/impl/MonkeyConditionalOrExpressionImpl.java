@@ -16,10 +16,12 @@ public class MonkeyConditionalOrExpressionImpl extends MonkeyExpressionImpl impl
     super(node);
   }
 
+  @Override
   public void accept(@NotNull MonkeyVisitor visitor) {
     visitor.visitConditionalOrExpression(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MonkeyVisitor) accept((MonkeyVisitor)visitor);
     else super.accept(visitor);

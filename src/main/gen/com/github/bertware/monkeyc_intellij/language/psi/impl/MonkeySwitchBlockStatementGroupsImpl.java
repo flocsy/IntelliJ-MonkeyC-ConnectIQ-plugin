@@ -20,6 +20,7 @@ public class MonkeySwitchBlockStatementGroupsImpl extends MonkeyPsiCompositeElem
     visitor.visitSwitchBlockStatementGroups(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MonkeyVisitor) accept((MonkeyVisitor)visitor);
     else super.accept(visitor);

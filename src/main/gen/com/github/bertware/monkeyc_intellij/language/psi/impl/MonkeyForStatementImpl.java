@@ -20,6 +20,7 @@ public class MonkeyForStatementImpl extends MonkeyPsiCompositeElementImpl implem
     visitor.visitForStatement(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof MonkeyVisitor) accept((MonkeyVisitor)visitor);
     else super.accept(visitor);
