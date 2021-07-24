@@ -29,14 +29,7 @@ repositories {
 dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
 }
-sourceSets {
-    main {
-        java {
-            srcDir("src/main/java")
-            srcDir("src/main/gen")
-        }
-    }
-}
+sourceSets["main"].java.srcDirs("src/main/gen")
 
 // Configure gradle-intellij-plugin plugin.
 // Read more: https://github.com/JetBrains/gradle-intellij-plugin
