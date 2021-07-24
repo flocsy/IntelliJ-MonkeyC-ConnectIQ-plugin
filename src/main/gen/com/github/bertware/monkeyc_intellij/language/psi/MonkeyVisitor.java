@@ -6,6 +6,10 @@ import com.intellij.psi.PsiElementVisitor;
 
 public class MonkeyVisitor extends PsiElementVisitor {
 
+  public void visitAccessLevel(@NotNull MonkeyAccessLevel o) {
+    visitPsiCompositeElement(o);
+  }
+
   public void visitAdditiveExpression(@NotNull MonkeyAdditiveExpression o) {
     visitExpression(o);
   }

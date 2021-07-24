@@ -44,6 +44,20 @@ public class MonkeyParser implements PsiParser, LightPsiParser {
   };
 
   /* ********************************************************** */
+  // PRIVATE | PROTECTED | HIDDEN | PUBLIC
+  public static boolean accessLevel(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "accessLevel")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, ACCESS_LEVEL, "<access level>");
+    r = consumeToken(b, PRIVATE);
+    if (!r) r = consumeToken(b, PROTECTED);
+    if (!r) r = consumeToken(b, HIDDEN);
+    if (!r) r = consumeToken(b, PUBLIC);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
   // multiplicativeExpression ((PLUS | SUB) multiplicativeExpression)*
   public static boolean additiveExpression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "additiveExpression")) return false;
@@ -1548,7 +1562,7 @@ public class MonkeyParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // annotation? STATIC? HIDDEN?
+  // annotation? STATIC? accessLevel?
   public static boolean modifiers(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "modifiers")) return false;
     boolean r;
@@ -1574,10 +1588,10 @@ public class MonkeyParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // HIDDEN?
+  // accessLevel?
   private static boolean modifiers_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "modifiers_2")) return false;
-    consumeToken(b, HIDDEN);
+    accessLevel(b, l + 1);
     return true;
   }
 
@@ -2635,7 +2649,8 @@ public class MonkeyParser implements PsiParser, LightPsiParser {
     DO, DOUBLELITERAL, ENUM, FALSE, FLOATLITERAL, FOR,
     FUNCTION, HEX_LITERAL, HIDDEN, IDENTIFIER, IF, INTLITERAL,
     LBRACE, LBRACKET, LONGLITERAL, LPAREN, MODULE, NEW,
-    NULL, PLUS, PLUSPLUS, RETURN, SELF, SEMI,
-    STATIC, SUB, SUBSUB, SWITCH, THIS, THROW,
-    TILDE, TRUE, TRY, USING, VAR, VOID, WHILE, STRING);
+    NULL, PLUS, PLUSPLUS, PRIVATE, PROTECTED, PUBLIC,
+    RETURN, SELF, SEMI, STATIC, SUB, SUBSUB,
+    SWITCH, THIS, THROW, TILDE, TRUE, TRY,
+    USING, VAR, VOID, WHILE, STRING);
 }

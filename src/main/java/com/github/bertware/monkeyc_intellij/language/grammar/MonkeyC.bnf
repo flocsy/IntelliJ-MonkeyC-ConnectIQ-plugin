@@ -34,7 +34,10 @@
     EXTENDS = "extends"
     NULL = "null"
     NATIVE = "native"
-    HIDDEN = "hidden"
+    PRIVATE = "private"
+    PROTECTED = "protected"
+    HIDDEN = "hidden" // hidden is synonymous with protected
+    PUBLIC = "public" // default
     STATIC = "static"
     INSTANCEOF = "instanceof"
     HAS = "has"
@@ -399,7 +402,9 @@ recoverWhile="argumentsList_recover"
 private argumentsList_recover ::= !(RPAREN)
 
 // hidden is the same as "protected" in Java -  it says that a variable or function is only accessible to a class or its subclasses:
-modifiers ::= annotation? STATIC? HIDDEN?
+modifiers ::= annotation? STATIC? accessLevel?
+
+accessLevel ::= PRIVATE | PROTECTED | HIDDEN | PUBLIC
 
 annotation ::= LPAREN symbol RPAREN {pin=2}
 

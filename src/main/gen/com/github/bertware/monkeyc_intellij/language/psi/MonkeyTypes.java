@@ -8,6 +8,7 @@ import com.github.bertware.monkeyc_intellij.language.psi.impl.*;
 
 public interface MonkeyTypes {
 
+  IElementType ACCESS_LEVEL = new MonkeyElementType("ACCESS_LEVEL");
   IElementType ADDITIVE_EXPRESSION = new MonkeyElementType("ADDITIVE_EXPRESSION");
   IElementType AND_EXPRESSION = new MonkeyElementType("AND_EXPRESSION");
   IElementType ANNOTATION = new MonkeyElementType("ANNOTATION");
@@ -142,6 +143,9 @@ public interface MonkeyTypes {
   IElementType PLUS = new MonkeyTokenType("+");
   IElementType PLUSEQ = new MonkeyTokenType("+=");
   IElementType PLUSPLUS = new MonkeyTokenType("++");
+  IElementType PRIVATE = new MonkeyTokenType("private");
+  IElementType PROTECTED = new MonkeyTokenType("protected");
+  IElementType PUBLIC = new MonkeyTokenType("public");
   IElementType QUES = new MonkeyTokenType("?");
   IElementType RBRACE = new MonkeyTokenType("}");
   IElementType RBRACKET = new MonkeyTokenType("]");
@@ -177,7 +181,10 @@ public interface MonkeyTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == ADDITIVE_EXPRESSION) {
+      if (type == ACCESS_LEVEL) {
+        return new MonkeyAccessLevelImpl(node);
+      }
+      else if (type == ADDITIVE_EXPRESSION) {
         return new MonkeyAdditiveExpressionImpl(node);
       }
       else if (type == AND_EXPRESSION) {

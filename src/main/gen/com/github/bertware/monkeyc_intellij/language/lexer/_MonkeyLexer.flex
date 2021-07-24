@@ -59,7 +59,10 @@ CHARLITERAL='[^']*'
   "extends"                      { return EXTENDS; }
   "null"                         { return NULL; }
   "native"                       { return NATIVE; }
+  "private"                      { return PRIVATE; }
+  "protected"                    { return PROTECTED; }
   "hidden"                       { return HIDDEN; }
+  "public"                       { return PUBLIC; }
   "static"                       { return STATIC; }
   "instanceof"                   { return INSTANCEOF; }
   "has"                          { return HAS; }

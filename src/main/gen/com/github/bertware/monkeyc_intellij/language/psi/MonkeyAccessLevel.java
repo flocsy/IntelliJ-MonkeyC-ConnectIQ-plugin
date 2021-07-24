@@ -5,12 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface MonkeyModifiers extends MonkeyPsiCompositeElement {
-
-  @Nullable
-  MonkeyAccessLevel getAccessLevel();
-
-  @Nullable
-  MonkeyAnnotation getAnnotation();
+public interface MonkeyAccessLevel extends MonkeyPsiCompositeElement {
 
 }
