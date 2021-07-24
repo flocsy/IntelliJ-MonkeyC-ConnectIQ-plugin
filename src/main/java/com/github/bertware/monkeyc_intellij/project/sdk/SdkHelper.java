@@ -11,11 +11,17 @@ public class SdkHelper {
 	public static final Integer SHELL_CMD = 2;
 	public static final Integer SIMULATOR_CMD = 3;
 
+	// ':' separated list of paths where the sdks can usually be found on the platform
+	// '~' means the user's HOME directory
+	// i.e: SDK_PATH="~/.Garmin/Sdks:/usr/local/lib/garmin"
+	public static final Integer SDK_PATH = 4;
+
 	private static final ImmutableMap<Integer, String> linux = ImmutableMap.<Integer, String>builder()
 		.put(MONKEYDO_CMD, "monkeydo")
 		.put(MONKEYDO_TEST_PARAM, "-t")
 		.put(SHELL_CMD, "shell")
 		.put(SIMULATOR_CMD, "simulator")
+		.put(SDK_PATH, "~/.Garmin/Sdks")
 		.build();
 
 	private static final ImmutableMap<Integer, String> mac = ImmutableMap.<Integer, String>builder()
@@ -23,6 +29,7 @@ public class SdkHelper {
 		.put(MONKEYDO_TEST_PARAM, "-t")
 		.put(SHELL_CMD, "shell")
 		.put(SIMULATOR_CMD, "ConnectIQ.app")
+		.put(SDK_PATH, "~/Library/Application Support/Garmin/ConnectIQ/Sdks")
 		.build();
 
 	private static final ImmutableMap<Integer, String> win = ImmutableMap.<Integer, String>builder()

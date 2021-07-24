@@ -24,6 +24,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class MonkeySdkType extends SdkType {
@@ -36,7 +39,8 @@ public class MonkeySdkType extends SdkType {
     TargetSdkVersion.VERSION_2_1_X,
     TargetSdkVersion.VERSION_2_2_X,
     TargetSdkVersion.VERSION_3_1_X,
-    TargetSdkVersion.VERSION_3_2_X
+    TargetSdkVersion.VERSION_3_2_X,
+    TargetSdkVersion.VERSION_4_0_X
   );
 
   public MonkeySdkType() {
@@ -57,7 +61,46 @@ public class MonkeySdkType extends SdkType {
   @Nullable
   @Override
   public String suggestHomePath() {
+    try {
+      String sdkPaths = SdkHelper.get(SdkHelper.SDK_PATH);
+      String[] sdkPathArr = sdkPaths.split(":");
+      String homeDir = System.getProperty("user.home");
+      for (String sdkPath : sdkPathArr) {
+        sdkPath = sdkPath.replaceFirst("^~", homeDir);
+        Path path = Paths.get(sdkPath);
+        if (Files.isDirectory(path)) {
+          return sdkPath;
+        }
+      }
+    } catch (Exception ignore) {
+    }
     return null;
+  }
+
+  @Override
+  @NotNull
+  public Collection<String> suggestHomePaths() {
+    Collection<String> result = null;
+    try {
+      String sdkPaths = SdkHelper.get(SdkHelper.SDK_PATH);
+      String[] sdkPathArr = sdkPaths.split(":");
+      String homeDir = System.getProperty("user.home");
+      result = new ArrayList<>(sdkPathArr.length);
+      for (String sdkPath : sdkPathArr) {
+        sdkPath = sdkPath.replaceFirst("^~", homeDir);
+        Path path = Paths.get(sdkPath);
+        if (Files.isDirectory(path)) {
+          File[] sdks = path.toFile().listFiles(File::isDirectory);
+          if (sdks != null) {
+            for (File dir : sdks) {
+              result.add(dir.getAbsolutePath());
+            }
+          }
+        }
+      }
+    } catch (Exception ignore) {
+    }
+    return result == null || result.isEmpty() ? Collections.emptyList() : result;
   }
 
   // 16x16

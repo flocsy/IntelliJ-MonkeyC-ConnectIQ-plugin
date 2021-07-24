@@ -9,6 +9,7 @@ public class TargetSdkVersion {
   public static final TargetSdkVersion VERSION_2_2_X = new TargetSdkVersion("2.2.0", "2.2.x");
   public static final TargetSdkVersion VERSION_3_1_X = new TargetSdkVersion("3.1.9", "3.1.x");
   public static final TargetSdkVersion VERSION_3_2_X = new TargetSdkVersion("3.2.1", "3.2.x");
+  public static final TargetSdkVersion VERSION_4_0_X = new TargetSdkVersion("4.0.1", "4.0.x");
 
   private String id;
   private String name;
