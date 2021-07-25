@@ -1,5 +1,8 @@
 package com.github.bertware.monkeyc_intellij.project.sdk;
 
+import com.github.bertware.monkeyc_intellij.project.sdk.devices.DevicesDirReader;
+import com.github.bertware.monkeyc_intellij.project.sdk.devices.DevicesReader;
+import com.github.bertware.monkeyc_intellij.project.sdk.devices.DevicesXmlReader;
 import com.google.common.collect.ImmutableMap;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
@@ -96,5 +99,13 @@ public class SdkHelper {
 	  String simulatorExecutableName = get(SIMULATOR_CMD);
 	  String exePath = sdkBinPath + simulatorExecutableName;
 	  return createGeneralCommandLine(sdkBinPath, exePath).withRedirectErrorStream(true);
+	}
+
+	public static DevicesReader getDevicesReader(Sdk sdk) {
+		DevicesXmlReader xmlReader = new DevicesXmlReader(sdk);
+		if (xmlReader.isRelevant()) {
+			return new DevicesXmlReader(sdk);
+		}
+		return new DevicesDirReader(sdk);
 	}
 }

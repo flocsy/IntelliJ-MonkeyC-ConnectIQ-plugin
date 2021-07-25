@@ -1,7 +1,7 @@
 package com.github.bertware.monkeyc_intellij.project.runconfig;
 
 import com.github.bertware.monkeyc_intellij.project.module.MonkeyModuleType;
-import com.github.bertware.monkeyc_intellij.project.sdk.MonkeySdkType;
+import com.github.bertware.monkeyc_intellij.project.sdk.SdkHelper;
 import com.github.bertware.monkeyc_intellij.project.sdk.devices.DevicesReader;
 import com.intellij.application.options.ModulesComboBox;
 import com.intellij.execution.ui.CommonProgramParametersPanel;
@@ -69,10 +69,9 @@ public class MonkeySettingsEditor extends SettingsEditor<AbstractMonkeyRunConfig
     if (sdk == null) {
       return new ArrayList<>();
     }
-    String sdkBinPath = MonkeySdkType.getBinPath(sdk);
 
-    DevicesReader devicesReader = new DevicesReader(sdkBinPath);
-    return devicesReader.parseDevicesXml();
+    DevicesReader devicesReader = SdkHelper.getDevicesReader(sdk);
+    return devicesReader.readDevices();
   }
 
   private static class TargetDeviceListRenderer extends ListCellRendererWrapper<TargetDevice> {

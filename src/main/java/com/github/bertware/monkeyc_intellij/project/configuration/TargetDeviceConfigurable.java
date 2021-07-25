@@ -2,14 +2,13 @@ package com.github.bertware.monkeyc_intellij.project.configuration;
 
 import com.github.bertware.monkeyc_intellij.project.runconfig.TargetDevice;
 import com.github.bertware.monkeyc_intellij.project.runconfig.TargetSdkVersion;
+import com.github.bertware.monkeyc_intellij.project.sdk.SdkHelper;
 import com.github.bertware.monkeyc_intellij.project.sdk.devices.DevicesReader;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.UnnamedConfigurable;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.ui.ComboBox;
-
-
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,15 +21,15 @@ public abstract class TargetDeviceConfigurable implements UnnamedConfigurable {
   private ComboBox<TargetSdkVersion> targetSdkVersionComboBox;
   private JPanel panel = new JPanel(new GridBagLayout());
 
-  public TargetDeviceConfigurable(Project project, @Nullable String sdkBinPath) {
-    DevicesReader devicesReader = new DevicesReader(sdkBinPath);
+  public TargetDeviceConfigurable(Project project, @Nullable Sdk sdk) {
+    DevicesReader devicesReader = SdkHelper.getDevicesReader(sdk);
 
     addTargetDevice(devicesReader);
     addTargetSdkVersion(devicesReader);
   }
 
   private void addTargetDevice(DevicesReader devicesReader) {
-    List<TargetDevice> targetDevices = devicesReader.parseDevicesXml();
+    List<TargetDevice> targetDevices = devicesReader.readDevices();
 
     targetDeviceComboBox = new ComboBox<>();
     for (TargetDevice device : targetDevices) {
