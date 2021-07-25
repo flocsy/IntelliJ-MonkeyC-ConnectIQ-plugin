@@ -143,7 +143,11 @@
 
             <action id="Monkey.StartSimulator"
                     class="com.github.bertware.monkeyc_intellij.ide.actions.StartSimulatorAction"
-                    description="Start simulator"/>
+                    description="Start Simulator"/>
+
+            <action id="Monkey.OpenSdkManager"
+                    class="com.github.bertware.monkeyc_intellij.ide.actions.OpenSdkManagerAction"
+                    description="Open SDK Manager"/>
 
             <add-to-group group-id="MainMenu" relative-to-action="HelpMenu" anchor="before"/>
         </group>

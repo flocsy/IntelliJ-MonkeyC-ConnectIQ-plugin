@@ -117,11 +117,6 @@ public abstract class AbstractMonkeyRunningState extends CommandLineState {
     }
   }
 
-  public void startSimulator(Sdk sdk) throws ExecutionException {
-    GeneralCommandLine runSimulatorCmd = createRunSimulatorCmd(sdk);
-    runSimulatorCmd.createProcess();
-  }
-
   // doesn't really run, but just copies prg on the device
   protected ExecutionResult runOnRealDevice(ConsoleView console) throws ExecutionException {
     VirtualFile copiedPrg = copyBuiltPrgToDevice();
@@ -174,15 +169,7 @@ public abstract class AbstractMonkeyRunningState extends CommandLineState {
 
   protected GeneralCommandLine createRunSimulatorCmd() throws ExecutionException {
     final Sdk sdk = getMonkeyParameters().getSdk();
-    return createRunSimulatorCmd(sdk);
-  }
-
-  protected static GeneralCommandLine createRunSimulatorCmd(Sdk sdk) throws ExecutionException {
-    String sdkBinPath = MonkeySdkType.getBinPath(sdk);
-
-    String simulatorExecutableName = SdkHelper.get(SdkHelper.SIMULATOR_CMD);
-    String exePath = sdkBinPath + simulatorExecutableName;
-    return createGeneralCommandLine(sdkBinPath, exePath).withRedirectErrorStream(true);
+    return SdkHelper.createRunSimulatorCmd(sdk);
   }
 
   protected GeneralCommandLine createRunInSimulatorCmd() throws ExecutionException {

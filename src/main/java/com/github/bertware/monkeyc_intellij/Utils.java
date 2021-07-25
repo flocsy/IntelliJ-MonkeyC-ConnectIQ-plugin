@@ -2,8 +2,8 @@ package com.github.bertware.monkeyc_intellij;
 
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.openapi.util.SystemInfo;
-import com.intellij.openapi.vfs.CharsetToolkit;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +24,12 @@ public class Utils {
         .withWorkDirectory(workDirectory)
         .withExePath(macExePath)
         .withParameters(parameters)
-        .withCharset(CharsetToolkit.UTF8_CHARSET);
+        .withCharset(StandardCharsets.UTF_8);
     }
 
     return new GeneralCommandLine()
       .withWorkDirectory(workDirectory)
       .withExePath(exePath)
-      .withCharset(CharsetToolkit.UTF8_CHARSET);
+      .withCharset(StandardCharsets.UTF_8);
   }
 }

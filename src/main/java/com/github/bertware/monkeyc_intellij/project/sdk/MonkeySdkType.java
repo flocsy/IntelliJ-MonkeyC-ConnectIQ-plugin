@@ -7,9 +7,6 @@ import com.github.bertware.monkeyc_intellij.project.sdk.skeleton.SdkSkeleton;
 import com.intellij.openapi.projectRoots.*;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-
-
-
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -28,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MonkeySdkType extends SdkType {
   public static String COMPILER_INFO_XML = "compilerInfo.xml";
@@ -62,15 +60,10 @@ public class MonkeySdkType extends SdkType {
   @Override
   public String suggestHomePath() {
     try {
-      String sdkPaths = SdkHelper.get(SdkHelper.SDK_PATH);
-      String[] sdkPathArr = sdkPaths.split(":");
-      String homeDir = System.getProperty("user.home");
-      for (String sdkPath : sdkPathArr) {
-        sdkPath = sdkPath.replaceFirst("^~", homeDir);
-        Path path = Paths.get(sdkPath);
-        if (Files.isDirectory(path)) {
-          return sdkPath;
-        }
+      String sdkPath = SdkHelper.getSdksPath();
+      Path path = Paths.get(sdkPath);
+      if (Files.isDirectory(path)) {
+        return sdkPath;
       }
     } catch (Exception ignore) {
     }
@@ -82,25 +75,17 @@ public class MonkeySdkType extends SdkType {
   public Collection<String> suggestHomePaths() {
     Collection<String> result = null;
     try {
-      String sdkPaths = SdkHelper.get(SdkHelper.SDK_PATH);
-      String[] sdkPathArr = sdkPaths.split(":");
-      String homeDir = System.getProperty("user.home");
-      result = new ArrayList<>(sdkPathArr.length);
-      for (String sdkPath : sdkPathArr) {
-        sdkPath = sdkPath.replaceFirst("^~", homeDir);
+        String sdkPath = SdkHelper.getSdksPath();
         Path path = Paths.get(sdkPath);
         if (Files.isDirectory(path)) {
           File[] sdks = path.toFile().listFiles(File::isDirectory);
-          if (sdks != null) {
-            for (File dir : sdks) {
-              result.add(dir.getAbsolutePath());
-            }
+          if (sdks != null && sdks.length > 0) {
+            result = Arrays.stream(sdks).map(File::getAbsolutePath).collect(Collectors.toList());
           }
         }
-      }
     } catch (Exception ignore) {
     }
-    return result == null || result.isEmpty() ? Collections.emptyList() : result;
+    return result == null ? Collections.emptyList() : result;
   }
 
   // 16x16
