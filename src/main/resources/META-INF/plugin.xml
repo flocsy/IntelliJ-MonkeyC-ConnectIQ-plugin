@@ -141,6 +141,10 @@
                     class="com.github.bertware.monkeyc_intellij.ide.actions.ApiDocsAction"
                     description="Open API documentation in a browser"/>
 
+            <action id="Monkey.StartSimulator"
+                    class="com.github.bertware.monkeyc_intellij.ide.actions.StartSimulatorAction"
+                    description="Start simulator"/>
+
             <add-to-group group-id="MainMenu" relative-to-action="HelpMenu" anchor="before"/>
         </group>
 
