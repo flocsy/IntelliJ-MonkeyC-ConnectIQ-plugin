@@ -54,6 +54,7 @@ public class DevicesDirReader implements DevicesReader {
                         .filter(Objects::nonNull)
                         .map(r -> gson.fromJson(r, CompilerJson.class))
                         .map(c -> new TargetDevice(c.deviceId, c.displayName))
+                        .sorted((a, b) -> a.getName().compareToIgnoreCase(b.getName()))
                         .collect(Collectors.toList());
             }
         }
