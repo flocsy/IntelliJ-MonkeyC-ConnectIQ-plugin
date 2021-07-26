@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>com.github.bertware.monkeyc_intellij</id>
-    <name>MonkeyC Support for Garmin IQ Developement</name>
+    <name>Monkey C Support for Garmin Connect IQ Developement</name>
     <version>0.4</version>
     <vendor email="monkeyc@bertware.net" url="https://github.com/bertware/monkeyc-intellij">Bertware</vendor>
 

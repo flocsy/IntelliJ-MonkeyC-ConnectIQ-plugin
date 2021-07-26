@@ -23,7 +23,7 @@ public class MonkeyCFileType extends LanguageFileType {
     @NotNull
     @Override
     public String getDescription() {
-        return "Monkey C file for Garmin IQ development";
+        return "Monkey C file for Garmin Connect IQ development";
     }
 
     @NotNull
