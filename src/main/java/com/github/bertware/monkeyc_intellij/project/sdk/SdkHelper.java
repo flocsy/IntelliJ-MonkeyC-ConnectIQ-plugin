@@ -29,7 +29,7 @@ public class SdkHelper {
 		.put(MONKEYDO_TEST_PARAM, "-t")
 		.put(SHELL_CMD, "shell")
 		.put(SIMULATOR_CMD, "simulator")
-		.put(CONNECT_IQ_DIR, "~/.Garmin")
+		.put(CONNECT_IQ_DIR, "~/.Garmin/ConnectIQ")
 		.build();
 
 	private static final ImmutableMap<String, String> mac = ImmutableMap.<String, String>builder()
